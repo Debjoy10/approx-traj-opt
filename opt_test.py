@@ -16,7 +16,7 @@ waypoints = np.array([
 
 sknots = get_knots(waypoints, 2*len(waypoints))
 ssnap = get_trajectory_snap_from_knots(waypoints, sknots)
-fsnap = get_opt_trajectory_snap(waypoints)
+fsnap = get_trajectory_snap(waypoints)
 
 print("Initial Snap- {}".format(ssnap))
 print("Final Snap- {}".format(fsnap))

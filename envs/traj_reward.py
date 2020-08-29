@@ -56,7 +56,7 @@ def get_trajectory_snap_from_knots(waypoints, knots, tdelta = 0.1, time_between_
     snap = pTraj.eval(rng, 4)
     return np.linalg.norm(snap)**2
 
-def get_opt_trajectory_snap(waypoints, tdelta = 0.1, time_between_gates = 2):
+def get_trajectory_snap(waypoints, tdelta = 0.1, time_between_gates = 2):
     starter_knots = get_knots(waypoints, time_between_gates*len(waypoints))
     Tij = np.array([ti-tj for ti, tj in zip(starter_knots[1:], starter_knots[:-1])])
     m = Tij.shape[0]
@@ -116,4 +116,4 @@ def calc_bonus(waypoints, delta, gate_width = 1, gate_height = 0.5,):
     az1 = np.array([az1])
 
     waypoints_modif = waypoints.copy() + az1*delta[:, 1:] + az0* delta[:, :1]
-    return get_opt_trajectory_snap(waypoints_modif)
+    return get_trajectory_snap(waypoints_modif)
