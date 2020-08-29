@@ -1,6 +1,7 @@
-from time_optimisation import *
 import traj_gen
 import numpy as np
+
+from envs.traj_reward import *
 
 from traj_gen import poly_trajectory as pt
 
@@ -10,14 +11,12 @@ waypoints = np.array([
 				[1, 3, 5], 
 				[2, 8, 11],
 				[4, 10, 17],
-				[8, 12, 16],
+				[11, 12, 16],
 		])
 
-starter_knots = get_knots(waypoints, scale = 10)
-final_knots = optimise_knots(waypoints)
+sknots = get_knots(waypoints, 2*len(waypoints))
+ssnap = get_trajectory_snap_from_knots(waypoints, sknots)
+fsnap = get_opt_trajectory_snap(waypoints)
 
-print("Initial - ")
-print(starter_knots)
-
-print("Final - ")
-print(final_knots)
+print("Initial Snap- {}".format(ssnap))
+print("Final Snap- {}".format(fsnap))
