@@ -63,13 +63,13 @@ def get_trajectory_snap(waypoints, tdelta = 0.1, time_between_gates = 2):
     gi = np.eye(m) - ((np.ones([m, m]) - np.eye(m)).astype(float))/(m-1)
 
     # Hyper-parameters
-    h = 0.01
-    lr = 1e-3
-    snap_stop_cond = 0.01
+    h = 1e-6
+    lr = 1e-5
+    snap_stop_cond = 10
 
     iter_ = 0
-    stop_iter = 100
-    prev_snap = 1000
+    stop_iter = 10
+    prev_snap = float("inf")
     while(iter_ < stop_iter):
         # To Suppress Print
         with open(os.devnull, "w") as f, contextlib.redirect_stdout(f):
@@ -87,7 +87,7 @@ def get_trajectory_snap(waypoints, tdelta = 0.1, time_between_gates = 2):
             with open(os.devnull, "w") as f, contextlib.redirect_stdout(f):
                 s = get_trajectory_snap_from_knots(waypoints, kn, tdelta, time_between_gates)
 
-            delT[i] = (s - base_snap)/h
+            delT[i] = (s - base_snap)/(h + 1e-8)
 
         gradT = np.zeros_like(Tij)
         for i in range(m):
